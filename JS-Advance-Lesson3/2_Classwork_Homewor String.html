@@ -1,0 +1,55 @@
+<!-- 
+    Запросите у пользователя ввести какую-то фразу. 
+    Отобразите каждое отдельное слово в виде списка ul li. 
+    Также отобразите первое слово UPPERCASE, а последние 2 с маленькой. 
+    Найдите все буквы "а" их количество в модальное окно. 
+ -->
+ 
+<!DOCTYPE html>
+<html >
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+     <input type="text" id="myinput" name="input" size="130" /><br />   
+     <input type="button" value="Преобразовать" onclick="makeul()"/><br />
+     <ul id="myUL"></ul>
+    <script>
+        function change() {
+        	var newtext = document.getElementById("myinput").value;
+        	var arraytext = newtext.split(" ");
+        	return arraytext;
+
+        }
+        function shiftsymbol(text){
+            var string = text;
+            var newstring = string.slice(0, 1).toLowerCase() + string.slice(1);
+            return newstring;
+        }
+        function alertwithn() {
+            var newtext = document.getElementById("myinput").value;
+
+            var patt = new RegExp("а", "g");
+            var result = newtext.match(patt);
+            alert(result.length);
+        }
+        function makeul() {
+        	var arraytext = change();
+        	   	for (var i = 0; i < arraytext.length; i++) {
+        		var newItem = document.createElement("li");
+        		newItem.innerHTML = arraytext[i];
+        		document.getElementById("myUL").appendChild(newItem);
+        	}
+            document.getElementById("myUL").firstChild.innerHTML = document.getElementById("myUL").firstChild.innerHTML.toUpperCase();
+            var lastitem = document.getElementById("myUL").lastChild.innerHTML;
+            document.getElementById("myUL").lastChild.innerHTML= shiftsymbol(lastitem);
+            var prelastitem = document.getElementById("myUL").lastChild.previousSibling.innerHTML
+            document.getElementById("myUL").lastChild.previousSibling.innerHTML = shiftsymbol(prelastitem);
+            alertwithn();
+        }
+
+    </script>
+
+</body>
+</html>
