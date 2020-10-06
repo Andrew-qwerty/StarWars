@@ -1,0 +1,48 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <style type="text/css">
+    #modal{
+      display: none;
+      border: 2px groove black;
+      background-color: grey;
+      width: 70px;
+      position: absolute;
+    }
+  </style>
+  <meta charset="utf-8">
+  <script>
+    window.onload = function () {
+      var mainDiv = document.getElementById("main-div");
+      mainDiv.onmouseover = function(e) {
+        var target = e && e.target || window.event.srcElement;
+        var dataToggleId = target.getAttribute('data-tooltip');
+        if (!dataToggleId) {
+            return
+        };
+       var rectangle = target.getBoundingClientRect();
+       console.log(rectangle);
+       var modal = document.getElementById("modal");
+       modal.style.top = rectangle.bottom + 5 + "px";
+       modal.style.left = rectangle.left + "px";
+       modal.innerHTML=dataToggleId;
+       modal.style.display = "block";
+    };
+     mainDiv.onmouseout = function(e) {
+      var modal = document.getElementById("modal");
+      modal.style.display = "none";
+     }
+};
+</script>
+</head>
+<body>
+  <div id="main-div">
+    <span data-tooltip="наведите">наведите</span> 
+    <span data-tooltip="для">для</span>
+    <span data-tooltip="подсказки">подсказки</span>
+</div>
+<div id = "modal">
+  
+</div>
+</body>
+</html>

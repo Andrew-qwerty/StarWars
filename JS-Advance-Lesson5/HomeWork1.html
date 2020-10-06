@@ -1,0 +1,63 @@
+<!--
+Создайте ссылку и див с текстом внутри, который изначально при загрузке страницы будет скрыт.
+При клике на ссылку див появляется, если повторно нажать ссылку див и текст должны пропасть.
+Также создайте кнопку, которая будет отменять выполнение обработчика клика по ссылке.
+ -->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Установка обработчика addEventListener</title>
+    <style type="text/css">
+        div{
+            display: none;
+            border: 5px;
+            border-color: black;
+            background-color: green;
+            width: 500px;
+            height: 200px;
+        }
+        .shown{
+            display: block;
+
+        }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+
+            var mylink = document.getElementsByTagName('a')[0];
+            var mybutton = document.getElementById("mybutton");
+            function toggleClass () {
+               var div = document.getElementsByTagName('div')[0];
+               div.classList.toggle('shown');
+            }
+            if (mylink) {
+
+              mylink.addEventListener("click", function(e) {
+                var target = e && e.target || window.event.srcElement;
+                
+                if (target.tagName !== 'A') {
+                    return
+                }
+                
+                e.preventDefault();
+                return false; // отменить переход по ссылке
+              });
+            };
+            mylink.addEventListener("click", toggleClass);
+            mybutton.addEventListener("click", removeHandler); 
+
+            function removeHandler () {
+                mylink.removeEventListener("click", toggleClass);  
+            };
+            
+      }
+    </script>
+</head>
+<body>
+    <a href="">Ссылка</a>
+    <div>Текст внутри</div>
+    <button id="mybutton">Охрана, отмена!</button>
+    
+</body>
+</html>
