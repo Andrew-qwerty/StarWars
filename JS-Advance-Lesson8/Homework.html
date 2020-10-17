@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Homework</title>
+</head>
+<body>
+	<!-- Создайте страницу которая запрашивает имя пользователя, если пользователь вводит "Admin" либо "admin" он попадает на страницу,
+    которая оповещает его о том что " Пользоваетль Admin(не статическая строка, а данные что ввел пользователь) вошел в систему"
+    а рядом разместите кнопку "Выход" которая вернет пользователя к модальному окну ввода логина. Реализуйте код как для куки так и для localstorage. -->
+    <div id="content">
+    	Вы не загогинены
+    </div>
+    <input type="button" id="exit" value="Выход">
+    <script type="text/javascript">
+    	window.addEventListener("load", function () {
+    		chekIn();
+    		logIn();
+    		function logIn() {
+            		var user = prompt('Введите имя пользователя');
+            		document.cookie = "username=" + encodeURIComponent(user);
+            		chekIn();
+            }
+            function logOut() {  
+            	document.getElementById("content").innerHTML =  'Вы не загогинены';      	
+            	if (document.cookie != undefined) {
+            	document.cookie = `username= + ${findCookieValue("username")}; max-age=0`;
+            	logIn();
+            	}
+            }
+    		function chekIn() {
+	            var currentUser = findCookieValue("username");
+	            if ((currentUser) && currentUser.toLowerCase() == "admin") {
+	            	document.getElementById("content").innerHTML =  `Пользоваетль ${currentUser} вошел в систему`
+	            } 
+        	}; 
+ 			var exit = document.getElementById("exit");
+ 			exit.addEventListener("click", logOut);
+	        function findCookieValue(cookieName) {
+	            var allcookies = document.cookie; 
+	            var pos = allcookies.indexOf(cookieName + "="); 
+
+	            // Если cookie с указанным именем найден, извлечь его значения.
+	            if (pos != -1) {
+	                var start = pos + cookieName.length + 1;
+	                var end = allcookies.indexOf(";", start); 
+
+	                if (end == -1) {
+	                    end = allcookies.length;
+	                } 
+
+	                var value = allcookies.substring(start, end);
+	                return decodeURIComponent(value);
+	            }
+	        }
+    	})
+    </script>
+</body>
+</html>
